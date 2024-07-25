@@ -1,9 +1,0 @@
-2024-07-25 18:24:03|DEBUG|/home/lighthouse/Projects/gin_example/main.go:23|ping request
-2024-07-25 18:24:03|INFO|/opt/go/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185|2024/07/25 - 18:24:03 | 200 |     196.434µs | 117.114.144.228 | GET      "/ping"
-
-2024-07-25 18:31:08|DEBUG|/home/lighthouse/Projects/gin_example/main.go:23|ping request
-2024-07-25 18:31:08|INFO|2024/07/25 - 18:31:08 | 200 |     227.044µs | 117.114.144.228 | GET      "/ping"
-
-2024-07-25 18:33:31|DEBUG|/home/lighthouse/Projects/gin_example/main.go:23|ping request
-2024-07-25 18:33:31|INFO| 200 |     202.347µs | 117.114.144.228 | GET      "/ping"
-
