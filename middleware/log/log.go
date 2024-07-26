@@ -46,8 +46,8 @@ func getDebugLevel(level string) zapcore.LevelEnabler {
 
 func getEncoder(typ string) zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05") // 时间格式设置
-	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder                       // 日志级别大写
+	encoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000") // 时间格式设置
+	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder                           // 日志级别大写
 	if typ == "console" {
 		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	}
@@ -58,11 +58,11 @@ func getEncoder(typ string) zapcore.Encoder {
 
 func getLogWriter(config *config.LogConfig) zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
-		Filename:   config.Filename,   // 日志文件位置
-		MaxSize:    config.MaxSize,    // 进行切割之前,日志文件的最大大小(MB为单位)
-		MaxBackups: config.MaxBackups, // 保留旧文件的最大个数
-		MaxAge:     config.MaxAge,     // 保留旧文件的最大天数
-		Compress:   false,             // 是否压缩/归档旧文件
+		Filename:   config.Filename,
+		MaxSize:    int(config.MaxSize),
+		MaxBackups: int(config.MaxBackups),
+		MaxAge:     int(config.MaxAge),
+		Compress:   false, // 是否压缩/归档旧文件
 	}
 	return zapcore.AddSync(lumberJackLogger)
 }
@@ -139,7 +139,7 @@ func ginDefaultformatter(param gin.LogFormatterParams) string {
 	if param.Latency > time.Minute {
 		param.Latency = param.Latency.Truncate(time.Second)
 	}
-	return fmt.Sprintf("API|%s|%s|%3d|%v|%s|\n%s",
+	return fmt.Sprintf("API|%s|%s|%3d|%v|%s|%s",
 		param.Path,
 		param.Method,
 		param.StatusCode,

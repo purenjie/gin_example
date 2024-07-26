@@ -7,16 +7,10 @@ import (
 )
 
 func main() {
+	configPath := "config.yaml"
 	r := gin.New()
-	logConfig := &config.LogConfig{
-		Level:      "debug",
-		Filename:   "gin_example.log",
-		MaxSize:    30,
-		MaxAge:     30,
-		MaxBackups: 10,
-	}
-	log.InitLogger(logConfig)
-
+	config.InitConfig(configPath)
+	log.InitLogger(config.GetLogConfig())
 	r.Use(log.GinLogger(), log.GinRecovery(true))
 	r.GET("/ping", func(c *gin.Context) {
 		log.Debug("ping request")

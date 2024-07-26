@@ -1,0 +1,6 @@
+log_config:
+  level: debug
+  filename: "./gin_example.log"
+  max_size: 30
+  max_age: 30
+  max_backups: 10
