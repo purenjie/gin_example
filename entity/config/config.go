@@ -8,7 +8,13 @@ import (
 )
 
 type Config struct {
-	LogConfig *LogConfig `yaml:"log_config"`
+	LogConfig     *LogConfig     `yaml:"log_config"`
+	HunyuanConfig *HunyuanConfig `yaml:"hunyuan_config"`
+}
+
+type HunyuanConfig struct {
+	SecretID  string `yaml:"secret_id"`
+	SecretKey string `yaml:"secret_key"`
 }
 
 type LogConfig struct {
@@ -33,4 +39,8 @@ func InitConfig(path string) {
 
 func GetLogConfig() *LogConfig {
 	return config.LogConfig
+}
+
+func GetHunyuanConfig() *HunyuanConfig {
+	return config.HunyuanConfig
 }
