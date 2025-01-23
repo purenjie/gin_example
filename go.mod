@@ -4,8 +4,10 @@ go 1.20
 
 require (
 	github.com/gin-gonic/gin v1.10.0
+	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	go.uber.org/zap v1.27.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -38,5 +40,4 @@ require (
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

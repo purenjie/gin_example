@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	LogConfig *LogConfig `yaml:"log_config"`
+	SignConfig map[string]string `yaml:"sign_config"`
+	LogConfig  *LogConfig        `yaml:"log_config"`
 }
 
 type LogConfig struct {
@@ -29,6 +30,11 @@ func InitConfig(path string) {
 	if err = yaml.Unmarshal(byteFile, &config); err != nil {
 		panic(fmt.Errorf("无法解析 yaml 文件: %s", string(byteFile)))
 	}
+}
+
+func GetAppSecret(app string) string {
+	signConfig := config.SignConfig
+	return signConfig[app]
 }
 
 func GetLogConfig() *LogConfig {

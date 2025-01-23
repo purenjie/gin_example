@@ -20,6 +20,8 @@ import (
 var sugarLogger *zap.SugaredLogger
 var apiLogger *zap.SugaredLogger
 
+const TraceID = "trace_id"
+
 func InitLogger(config *config.LogConfig) {
 	core := zapcore.NewTee(
 		zapcore.NewCore(getEncoder("console"), zapcore.AddSync(os.Stdout), getDebugLevel(config.Level)), // console 打印
@@ -67,35 +69,52 @@ func getLogWriter(config *config.LogConfig) zapcore.WriteSyncer {
 	return zapcore.AddSync(lumberJackLogger)
 }
 
-func Debug(args ...interface{}) {
+func getTraceID(c *gin.Context) string {
+	traceID, _ := c.Get(TraceID)
+	return traceID.(string)
+}
+
+func Debug(c *gin.Context, args ...interface{}) {
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Debug(args...)
 }
 
-func Debugf(template string, args ...interface{}) {
+func Debugf(c *gin.Context, template string, args ...interface{}) {
+	template += "%s"
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Debugf(template, args...)
 }
 
-func Info(args ...interface{}) {
+func Info(c *gin.Context, args ...interface{}) {
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Info(args...)
 }
 
-func Infof(template string, args ...interface{}) {
+func Infof(c *gin.Context, template string, args ...interface{}) {
+	template += "%s"
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Infof(template, args...)
 }
 
-func Warn(args ...interface{}) {
+func Warn(c *gin.Context, args ...interface{}) {
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Warn(args...)
 }
 
-func Warnf(template string, args ...interface{}) {
+func Warnf(c *gin.Context, template string, args ...interface{}) {
+	template += "%s"
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Warnf(template, args...)
 }
 
-func Error(args ...interface{}) {
+func Error(c *gin.Context, args ...interface{}) {
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Error(args...)
 }
 
-func Errorf(template string, args ...interface{}) {
+func Errorf(c *gin.Context, template string, args ...interface{}) {
+	template += "%s"
+	args = append(args, "|"+getTraceID(c))
 	sugarLogger.Errorf(template, args...)
 }
 
